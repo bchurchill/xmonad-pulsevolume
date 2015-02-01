@@ -53,6 +53,7 @@ Scripts for setting and visualizing pulseaudio volume with XMonad+xmobar (and ma
            , template = "%StdinReader% }{ %cpu% | %memory%   %vol%  <fc=#e0e0e0>%date%</fc>"
            }
    ```
+   
 4. (Optional) Upon boot, I like to reset the volume to what I consider a reasonable volume and unmute.  In my `xsession.rc` file I run `pulse-volume.sh reset`.  This also ensures that ~/.mute and ~/.volume are correct (see below).
 
 ## Under the hood and Future Work
