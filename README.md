@@ -67,4 +67,6 @@ I expect you can use these scripts with other window managers or status bars, li
 
 ## Bugs
 
+I wrote this years ago and never really intended to release it.  Yet, it's stood the test of time for me, and I automatically deploy it on several linux systems without issues.  However, given that nobody **else** has ever tested it, I imagine it has a lingering issue or two -- even if only in the setup instructions that I wrote.
+
 Use the issue tracker.  For security bugs, email berkeley@berkeleychurchill.com.  You can get a gpg key off my webpage at https://www.berkeleychurchill.com if you like.
