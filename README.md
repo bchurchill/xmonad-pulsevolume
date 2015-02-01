@@ -1,5 +1,5 @@
 # xmonad-pulsevolume
-Scripts for setting and visualizing pulseaudio volume with XMonad+xmobar
+Scripts for setting and visualizing pulseaudio volume with XMonad+xmobar (and maybe others).
 
 ## Purpose
 
@@ -23,8 +23,8 @@ Scripts for setting and visualizing pulseaudio volume with XMonad+xmobar
 
 ## Install & Use
 
-0. Dependencies: working xmonad, bash, python, xmobar
-1. Add pulse-volume.sh and show-volume.py somewhere on your PATH.
+0. Dependencies: working xmonad, pulseaudio.  For visualization: python, xmobar.
+1. Add pulse-volume.sh and show-volume.py somewhere on your $PATH.
 2. Update xmonad.hs for media buttons.  I add the following keybindings:
    ```
     -- mute button
@@ -45,7 +45,7 @@ Scripts for setting and visualizing pulseaudio volume with XMonad+xmobar
            , commands = [ Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 5
                         , Run Memory ["-t","Mem: <usedratio>%"] 5
                         , Run Date "%a %b %d %Y %H:%M:%S " "date" 1
-                        , Run Com "python" ["/home/berkeley/bin/show-volume.py"] "vol" 1
+                        , Run Com "python" ["/path/to/show-volume.py"] "vol" 1
                         , Run StdinReader
                         ]
            , sepChar = "%"
@@ -57,12 +57,12 @@ Scripts for setting and visualizing pulseaudio volume with XMonad+xmobar
 
 ## Under the hood and Future Work
 
-The pulse-volume.sh script maintains two files in your home directory: .volume and .mute.  Whenever you run this script it reads the current volume from the file and updates it appropriately (it takes a parameter "increase", "decrease", "mute", "unmute", "toggle").  It also updates pulse-volume.  If this file is changed between uses of the script, the volume can jump dramatically.  Obviously, it would be better to get the current volume from pulse audio itself instead of replicating state... contributions welcome!
+The pulse-volume.sh script maintains two files in your home directory: .volume and .mute.  Whenever you run this script it reads the current volume from the file and updates it appropriately (it takes a parameter "increase", "decrease", "mute", "unmute", "toggle").  It also updates pulse-volume.  If this file is changed between uses of the script, the volume can jump dramatically; hence the "reset" feature to go back to a fixed volume.  Obviously, it would be better to get the current volume from pulse audio itself instead of replicating state... contributions welcome!
 
-./show-volume.py generates the graphical representation from these files.  It takes no parameters.  It's very easy to hack on this to make a new visualization... let me know if you do something cool!
+./show-volume.py generates the graphical representation from these files.  It takes no parameters -- run it from the command line to see what it does.  It's very easy to hack on this to make a new visualization... let me know if you do something cool!
 
 I expect you can use these scripts with other window managers or status bars, like dzen2.  I somehow doubt there's much need -- but if you find it useful, feel free to contribute additions.
 
 ## Bugs
 
-Use the issue tracker.  For security bugs, email berkeley@berkeleychurchill.com.  You can get a gpg key off my webpage at https://berkeleychurchill.com if you like.
+Use the issue tracker.  For security bugs, email berkeley@berkeleychurchill.com.  You can get a gpg key off my webpage at https://www.berkeleychurchill.com if you like.
