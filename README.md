@@ -1,2 +1,68 @@
 # xmonad-pulsevolume
 Scripts for setting and visualizing pulseaudio volume with XMonad+xmobar
+
+## Purpose
+
+ * Easily change pulseaudio volume from xmonad
+ * Visualize volume in xmobar.  Here are some snapshots of the representation in increasing volume:
+
+```
+     [  (mute)  ]
+     [          ]
+     [.         ]
+     [-         ]
+     [/         ]
+     [/.        ]
+     [/-        ]
+     [//        ]
+     [//.       ]
+     [///-      ]
+     [////.     ]
+     [//////////]
+```
+
+## Install & Use
+
+0. Dependencies: working xmonad, bash, python, xmobar
+1. Add pulse-volume.sh and show-volume.py somewhere on your PATH.
+2. Update xmonad.hs for media buttons.  I add the following keybindings:
+   ```
+    -- mute button
+    , ((0                 , 0x1008FF12), spawn "pulse-volume.sh toggle")
+
+    -- volumeup button
+    , ((0                 , 0x1008FF13), spawn "pulse-volume.sh increase")
+
+    -- volumedown button
+    , ((0                 , 0x1008FF11), spawn "pulse-volume.sh decrease")
+   ```
+3. Update xmobar configuation to run python script.  The important thing is to add to the 'commands' array, and to the template.  Here's a full example:
+   ```
+     Config { font = "xft:Droid Sans Mono:size=9:antialias=true"
+           , bgColor = "#181818"
+           , fgColor = "green"
+           , position = TopW L 95
+           , commands = [ Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 5
+                        , Run Memory ["-t","Mem: <usedratio>%"] 5
+                        , Run Date "%a %b %d %Y %H:%M:%S " "date" 1
+                        , Run Com "python" ["/home/berkeley/bin/show-volume.py"] "vol" 1
+                        , Run StdinReader
+                        ]
+           , sepChar = "%"
+           , alignSep = "}{"
+           , template = "%StdinReader% }{ %cpu% | %memory%   %vol%  <fc=#e0e0e0>%date%</fc>"
+           }
+   ```
+4. (Optional) Upon boot, I like to reset the volume to what I consider a reasonable volume and unmute.  In my `xsession.rc` file I run `pulse-volume.sh reset`.  This also ensures that ~/.mute and ~/.volume are correct (see below).
+
+## Under the hood and Future Work
+
+The pulse-volume.sh script maintains two files in your home directory: .volume and .mute.  Whenever you run this script it reads the current volume from the file and updates it appropriately (it takes a parameter "increase", "decrease", "mute", "unmute", "toggle").  It also updates pulse-volume.  If this file is changed between uses of the script, the volume can jump dramatically.  Obviously, it would be better to get the current volume from pulse audio itself instead of replicating state... contributions welcome!
+
+./show-volume.py generates the graphical representation from these files.  It takes no parameters.  It's very easy to hack on this to make a new visualization... let me know if you do something cool!
+
+I expect you can use these scripts with other window managers or status bars, like dzen2.  I somehow doubt there's much need -- but if you find it useful, feel free to contribute additions.
+
+## Bugs
+
+Use the issue tracker.  For security bugs, email berkeley@berkeleychurchill.com.  You can get a gpg key off my webpage at https://berkeleychurchill.com if you like.
