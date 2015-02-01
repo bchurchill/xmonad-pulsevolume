@@ -54,11 +54,11 @@ Scripts for setting and visualizing pulseaudio volume with XMonad+xmobar (and ma
            }
    ```
    
-4. (Optional) Upon boot, I like to reset the volume to what I consider a reasonable volume and unmute.  In my `xsession.rc` file I run `pulse-volume.sh reset`.  This also ensures that ~/.mute and ~/.volume are correct (see below).
+4. (Optional) Upon boot, I like to reset the volume to what I consider a reasonable volume and unmute.  In my .xsession file I run `pulse-volume.sh reset`.  This also ensures that ~/.mute and ~/.volume are correct (see below).
 
-## Under the hood and Future Work
+## Under the hood and future work
 
-The pulse-volume.sh script maintains two files in your home directory: .volume and .mute.  Whenever you run this script it reads the current volume from the file and updates it appropriately (it takes a parameter "increase", "decrease", "mute", "unmute", "toggle").  It also updates pulse-volume.  If this file is changed between uses of the script, the volume can jump dramatically; hence the "reset" feature to go back to a fixed volume.  Obviously, it would be better to get the current volume from pulse audio itself instead of replicating state... contributions welcome!
+The pulse-volume.sh script maintains two files in your home directory: ~/.volume and ~/.mute.  Whenever you run this script it reads the current volume from the file and updates it appropriately (it takes a parameter "increase", "decrease", "mute", "unmute", "toggle").  It also updates pulse-volume.  If this file is changed between uses of the script, the volume can jump dramatically; hence the "reset" feature to go back to a fixed volume.  Obviously, it would be better to get the current volume from pulse audio itself instead of replicating state... contributions welcome!
 
 ./show-volume.py generates the graphical representation from these files.  It takes no parameters -- run it from the command line to see what it does.  It's very easy to hack on this to make a new visualization... let me know if you do something cool!
 
