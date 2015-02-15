@@ -18,7 +18,7 @@ with open(home + "/.mute") as f:
 
 if isunmuted:
   volume = int(content[0])
-  bars = volume / 9000
+  bars = int(volume / 9000)
 
   if (volume % 9000 == 0):
     output = allbars[0:bars+1] + emptybars[bars+1:]
